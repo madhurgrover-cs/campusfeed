@@ -1,0 +1,1 @@
+Database migrations for CampusFeed. Alembic reads DATABASE_URL through app.core.config.
