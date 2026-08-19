@@ -9,6 +9,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.core.config import get_settings
 from app.core.database import Base
+from app.auth.models import User
+from app.events.models import Event
+from app.sources.models import Source
+from app.submissions.models import Submission
 
 config = context.config
 config.set_main_option("sqlalchemy.url", get_settings().database_url)
