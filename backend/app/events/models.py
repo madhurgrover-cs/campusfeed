@@ -45,6 +45,7 @@ class Event(Base):
     canonical_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("event.id"), nullable=True
     )
+    moderator_note: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
