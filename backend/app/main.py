@@ -2,9 +2,15 @@ from fastapi import FastAPI, HTTPException, status
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.auth.router import router as auth_router
 from app.core.database import engine
+from app.events.router import router as events_router
+from app.submissions.router import router as submissions_router
 
 app = FastAPI(title="CampusFeed")
+app.include_router(auth_router)
+app.include_router(events_router)
+app.include_router(submissions_router)
 
 
 @app.get("/health")

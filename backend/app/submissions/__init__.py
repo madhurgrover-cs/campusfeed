@@ -1,0 +1,1 @@
+"""Submission domain models."""
