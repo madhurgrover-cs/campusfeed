@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables or a local .env file."""
 
     database_url: str
+    jwt_secret_key: str
+    jwt_algorithm: str = "HS256"
+    jwt_expire_minutes: int = 30
 
     model_config = SettingsConfigDict(
         env_file=Path(__file__).resolve().parents[3] / ".env",
