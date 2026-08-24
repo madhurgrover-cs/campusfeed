@@ -84,11 +84,14 @@ def add_or_merge_item(new_card, source_type="unknown"):
 
     if duplicate_idx is not None:
         canonical = canonical_store[duplicate_idx]
-        canonical["sources"].append({
-            "source_url": new_card.get("source_url"),
-            "source_name": new_card.get("source_name"),
-            "source_type": source_type
-        })
+        new_source_url = new_card.get("source_url")
+        existing_urls = [s.get("source_url") for s in canonical["sources"]]
+        if new_source_url not in existing_urls:
+            canonical["sources"].append({
+                "source_url": new_source_url,
+                "source_name": new_card.get("source_name"),
+                "source_type": source_type
+            })
         print(f"  Merged into existing canonical item: {canonical['primary_card']['headline']}")
         _save_canonical_store(canonical_store)
         return "merged", duplicate_idx

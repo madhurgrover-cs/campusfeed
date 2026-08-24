@@ -17,13 +17,19 @@ CAMPUS_ITEM_SCHEMA_PROMPT = """Return ONLY valid JSON, no markdown, no explanati
   "details": object,
   "notable_attendees": [string],
   "tags": [string],
+  "confidence_notes": string,
+  "tags": [string],
   "confidence_notes": string
+}
+}
 }
 
 Rules:
 - item_type: pick the single best fit. Use "event" for hackathons/workshops/symposiums/cultural/sports.
-  Use "announcement" for general notices/circulars. Use "opportunity" for internships/scholarships/placements.
-  Use "achievement" for faculty/student accomplishments. Use "deadline" for standalone deadline reminders.
+  Use "announcement" for general notices/circulars. Use "opportunity" for internships/scholarships/placements.  Use "achievement" for faculty/student accomplishments.
+- Use "deadline" ONLY for a cutoff with no associated happening. If an item has both a happening and a cutoff (e.g. a fest with a registration deadline), use "event" and put the cutoff in details.registration_deadline. If uncertain between event and deadline, choose "event".
+  
+  
 - details: put type-specific facts here as key-value pairs (e.g. venue, registration_fee, prize_pool,
   team_size, eligibility, contact_info) - only include keys that are actually relevant and present.
   Do NOT force event-style fields onto non-event items.

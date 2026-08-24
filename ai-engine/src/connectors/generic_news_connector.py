@@ -105,6 +105,7 @@ def run_news_mention_connector(query="SRM University"):
             card["source_name"] = article.get("source_id", "News mention")
             card["image_url"] = article.get("image_url")
             card["connector_type"] = "news_mention"
+            card["source_type"] = "news_outlet"
             card["raw_extracted_data"] = item_data
 
             mark_processed(source_url, card["headline"])

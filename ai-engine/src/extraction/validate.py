@@ -45,11 +45,11 @@ def call_gemini_with_retry(prompt, max_retries=2, wait_seconds=35):
 
 
 def score_trust(item_data, source_type):
-    "\"\"\"
+    """
     Trust scoring based on UNIVERSAL fields that apply to any campus item type,
     not just events. date_start/details are bonus signals, never required -
     a valid safety notice or circular may legitimately have neither.
-    \"\"\""
+    """
     score = 0
     reasons = []
 
@@ -59,6 +59,9 @@ def score_trust(item_data, source_type):
     elif source_type == "student_submission":
         score += 15
         reasons.append("Student submission, unverified source (+15)")
+    elif source_type == "news_outlet":
+        score += 30
+        reasons.append("Third-party news outlet (+30)")
     else:
         reasons.append("Unknown source type (+0)")
 
@@ -91,7 +94,7 @@ def score_trust(item_data, source_type):
 
 
 def classify_sensitivity(item_data):
-    prompt = "\"\"\"" + """
+    prompt = """
 You are a content safety classifier for a campus news app.
 Given this campus item data, classify its sensitivity level.
 
@@ -112,7 +115,7 @@ or touches administrative/policy controversy.
 Classify as "routine" for normal events, announcements, opportunities, achievements, notices.
 
 DATA:
-""" + json.dumps(item_data, indent=2) + "\"\"\""
+""" + json.dumps(item_data, indent=2)
 
     response = call_gemini_with_retry(prompt)
     if response is None:
