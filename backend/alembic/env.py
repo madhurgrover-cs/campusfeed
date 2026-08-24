@@ -11,6 +11,7 @@ from app.core.config import get_settings
 from app.core.database import Base
 from app.auth.models import User
 from app.events.models import Event
+from app.ingest.models import EventSource, IngestedItem
 from app.sources.models import Source
 from app.submissions.models import Submission
 

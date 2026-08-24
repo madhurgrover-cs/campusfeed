@@ -5,12 +5,14 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.auth.router import router as auth_router
 from app.core.database import engine
 from app.events.router import router as events_router
+from app.ingest.router import router as ingest_router
 from app.moderation.router import router as moderation_router
 from app.submissions.router import router as submissions_router
 
 app = FastAPI(title="CampusFeed")
 app.include_router(auth_router)
 app.include_router(events_router)
+app.include_router(ingest_router)
 app.include_router(moderation_router)
 app.include_router(submissions_router)
 

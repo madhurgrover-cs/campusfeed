@@ -18,6 +18,7 @@ class EventCreate(BaseModel):
     end_at: datetime | None = None
     registration_deadline: datetime | None = None
     source_url: str
+    image_url: str | None = None
     status: EventStatus = EventStatus.PUBLISHED
 
 
@@ -31,6 +32,7 @@ class EventOut(BaseModel):
     end_at: datetime | None
     registration_deadline: datetime | None
     source_url: str
+    image_url: str | None
     status: EventStatus
     created_at: datetime
 

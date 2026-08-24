@@ -31,6 +31,7 @@ class Event(Base):
     end_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     registration_deadline: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     source_url: Mapped[str] = mapped_column(Text, nullable=False)
+    image_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     raw_extracted_json: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
     confidence_score: Mapped[float | None] = mapped_column(Float, nullable=True)
     status: Mapped[EventStatus] = mapped_column(
