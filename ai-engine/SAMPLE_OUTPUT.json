@@ -1,153 +1,62 @@
 [
   {
-    "primary_card": {
-      "headline": "SRM Workshop: Master Vibe Coding & AI Prompt Engineering",
-      "one_liner": "SRM Institute of Science & Technology hosts the 'Prompt to Paradigm: Mastering the Art of Vibe Coding' workshop on August 29. Register for Rs 700 to learn AI, prompt engineering, and code optimization techniques.",
-      "source_tag": "SRM Tech Events",
-      "category_emoji": "🤖",
-      "source_url": "https://www.aaruush.org/events",
-      "source_name": "Aaruush SRM",
-      "raw_extracted_data": {
-        "title": "Workshop Series: Prompt to Paradigm: Mastering the Art of Vibe Coding",
-        "organizer": "SRM Institute of Science & Technology",
-        "department": null,
-        "event_type": "Workshop",
-        "date_start": "2024-08-29",
-        "date_end": null,
-        "venue": null,
-        "team_size": null,
-        "registration_fee": "Rs 700",
-        "prize_pool": null,
-        "eligibility": null,
-        "category": "Technology",
-        "tags": [
-          "AI",
-          "Prompt Engineering",
-          "Vibe Coding",
-          "Debugging",
-          "Code Optimization",
-          "Azure",
-          "Cloud",
-          "Automation",
-          "Infosync.ai",
-          "Aaruush 26"
-        ],
-        "confidence_notes": "Assumed current year (2024) for the August 29th date. Venue, team size, prize pool, and eligibility are not specified. The workshop is part of 'AARUUSH '26', a national level techno-management fest."
-      }
+    "item_id": "6e31671f2fa375d2",
+    "schema_version": "0.1",
+    "item_type": "event",
+    "card": {
+      "headline": "EIE Department to Host NOMIZO'26 National Symposium",
+      "one_liner": "SRMIST's EIE Department, in association with the Biomedical Society of India (BMESI), will host NOMIZO’26, a two-day national symposium on August 20-21, 2026. The event will feature engaging technical challenges, including 'Electro Escape' on Day 1.",
+      "category_emoji": "📅",
+      "source_tag": "SRMIST EIE Dept.",
+      "image_url": null
     },
-    "sources": [
-      {
-        "source_url": "https://www.aaruush.org/events",
-        "source_name": "Aaruush SRM",
-        "source_type": "official_website"
+    "extracted": {
+      "title": "NOMIZO’26 – National Level Symposium",
+      "item_type": "event",
+      "organizer": "Department of Electronics and Instrumentation Engineering, SRMIST",
+      "department": "Electronics and Instrumentation Engineering",
+      "category": "Symposium",
+      "date_start": "2026-08-20",
+      "date_end": "2026-08-21",
+      "details": {
+        "description": "The Department of Electronics and Instrumentation Engineering, SRMIST, in association with the Biomedical Society of India (BMESI), is organizing NOMIZO’26, a two-day National Level Symposium on 20–21 August 2026. The symposium features engaging technical events that challenge participants to apply creativity, engineering skills, and innovative thinking. Electro Escape on Day 1 will test participants through",
+        "associated_with": "Biomedical Society of India (BMESI)",
+        "event_format": "National Level",
+        "duration": "two-day",
+        "featured_event_day1": "Electro Escape"
       },
-      {
-        "source_url": "https://www.aaruush.org/events",
-        "source_name": "Aaruush SRM",
-        "source_type": "official_website"
-      }
-    ]
-  },
-  {
-    "primary_card": {
-      "headline": "AARUUSH '26 Presents Visual Vista Design Competition",
-      "one_liner": "The \"Visual Vista\" competition, focusing on digital media and design, will take place on August 21-22, 2026, at TP 401/402, offering a prize pool of up to ₹35,000.",
-      "source_tag": "AARUUSH '26",
-      "category_emoji": "🎨",
-      "source_url": "https://www.aaruush.org/events",
-      "source_name": "Aaruush SRM",
-      "raw_extracted_data": {
-        "title": "VISUAL VISTA",
-        "organizer": "SRM Institute of Science & Technology",
-        "department": null,
-        "event_type": "Competition",
-        "date_start": "2026-08-21",
-        "date_end": "2026-08-22",
-        "venue": "TP 401/402",
-        "team_size": null,
-        "registration_fee": null,
-        "prize_pool": "₹35,000",
-        "eligibility": null,
-        "category": "Digital Media & Design",
-        "tags": [
-          "Digital Art",
-          "Multimedia",
-          "Video Editing",
-          "Graphic Design",
-          "Innovation",
-          "Creativity",
-          "Techno-Management Fest"
-        ],
-        "confidence_notes": "Year for dates (2026) inferred from 'AARUUSH '26'. SRM Institute of Science & Technology is considered the primary organizer, with 'AARUUSH '26' being the festival under which this event is held. Prize pool specifies 'upto ₹35,000'."
-      }
-    },
-    "sources": [
-      {
-        "source_url": "https://www.aaruush.org/events",
-        "source_name": "Aaruush SRM",
-        "source_type": "official_website"
-      },
-      {
-        "source_url": "https://www.aaruush.org/events",
-        "source_name": "Aaruush SRM",
-        "source_type": "official_website"
-      },
-      {
-        "source_url": "https://www.aaruush.org/events",
-        "source_name": "Aaruush SRM",
-        "source_type": "official_website"
-      },
-      {
-        "source_url": "https://example-fake-instagram-repost.com/post123",
-        "source_name": "Student Submission (Instagram repost)",
-        "source_type": "student_submission"
-      }
-    ]
-  },
-  {
-    "primary_card": {
-      "headline": "NOMIZO'26: National Symposium by EIE Dept & BMESI Announced",
-      "one_liner": "The Department of Electronics and Instrumentation Engineering, SRMIST, in association with BMESI, will host NOMIZO'26, a National Level Symposium, on August 20-21, 2026.",
-      "source_tag": "SRM EIE Dept",
-      "category_emoji": "⚙️",
-      "source_url": "https://www.srmist.edu.in/events/nomizo26-national-level-symposium/",
-      "source_name": "SRMIST Events",
-      "raw_extracted_data": {
-        "title": "NOMIZO’26 – National Level Symposium",
-        "organizer": "The Department of Electronics and Instrumentation Engineering, SRMIST, in association with the Biomedical Society of India (BMESI)",
-        "department": "Department of Electronics and Instrumentation Engineering",
-        "event_type": "National Level Symposium",
-        "date_start": "2026-08-20",
-        "date_end": "2026-08-21",
-        "venue": null,
-        "team_size": null,
-        "registration_fee": null,
-        "prize_pool": null,
-        "eligibility": null,
-        "category": "Technical",
-        "tags": [
-          "NOMIZO’26",
-          "National Level",
-          "Symposium",
-          "Electronics Engineering",
-          "Instrumentation Engineering",
-          "BMESI",
-          "Technical events"
-        ],
-        "confidence_notes": "Venue, team_size, registration_fee, prize_pool, and eligibility are not explicitly stated in the provided text, hence set to null."
-      }
+      "notable_attendees": [],
+      "tags": [
+        "Symposium",
+        "National Level",
+        "Technical Event",
+        "Electronics and Instrumentation Engineering",
+        "Biomedical Engineering"
+      ],
+      "confidence_notes": "The 'description' field in 'details' appears to be truncated in the source meta description."
     },
     "sources": [
       {
         "source_url": "https://www.srmist.edu.in/events/nomizo26-national-level-symposium/",
         "source_name": "SRMIST Events",
         "source_type": "official_website"
-      },
-      {
-        "source_url": "https://www.srmist.edu.in/events/nomizo26-national-level-symposium/",
-        "source_name": "SRMIST Events",
-        "source_type": "official_website"
       }
-    ]
+    ],
+    "trust": {
+      "trust_score": 100,
+      "trust_label": "Verified",
+      "trust_reasons": [
+        "Official institutional source (+40)",
+        "3/3 core fields present (+35)",
+        "Optional context (date/details) present (+25)"
+      ]
+    },
+    "sensitivity": {
+      "sensitivity_level": "routine",
+      "reason": "This item describes a standard academic event (a national level symposium) with technical events. It does not involve any safety incidents, disciplinary actions, health emergencies, protests, or anything that could harm reputation or cause panic. It is a normal announcement for an upcoming event."
+    },
+    "decision": "AUTO_PUBLISH",
+    "requires_review": false,
+    "connector_type": "static_html"
   }
 ]
