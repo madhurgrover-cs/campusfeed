@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 30
     ingest_service_token: str
+    redis_url: str = "redis://localhost:6379/0"
 
     model_config = SettingsConfigDict(
         env_file=Path(__file__).resolve().parents[3] / ".env",
