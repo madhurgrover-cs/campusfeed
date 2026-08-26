@@ -117,3 +117,5 @@ scoring, multi-university support, RAG/AI chat, OCR, notifications system,
 Redis/Celery (until Phase 4 genuinely needs it), CI/CD, monitoring stack —
 these are real future phases, not current tasks. Building them now without
 being asked is scope creep.
+## Addressing the User
+Address the user as Madhur when reporting task completion or summaries.
