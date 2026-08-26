@@ -2,15 +2,41 @@
 
 v0.1 policy (do not change without re-confirming with the team): regardless of
 the item's upstream trust/sensitivity "decision" (AUTO_PUBLISH or
-HOLD_FOR_HUMAN_REVIEW), every Event created here gets
-status=pending_verification. decision/trust/sensitivity are stored as data
-inside raw_extracted_json, never used to skip moderation.
+HOLD_FOR_HUMAN_REVIEW) or the "requires_review" boolean, every Event created
+here gets status=pending_verification. decision/trust/sensitivity/
+requires_review are stored as data inside raw_extracted_json, NEVER read for
+control flow - do not add an `if requires_review` shortcut here.
 
-Item shape: see app/ingest/schemas.py docstring - the request body is a raw
-list[dict] because the upstream contract (ai-engine/) is explicitly flexible
-and wasn't finalized when this was written. Fields are read defensively with
-.get() so a differently-shaped item reports its own per-item error instead of
-breaking the batch.
+Item shape: confirmed against ai-engine/src/pipeline/build_ingest_payload.py
+on the track-b branch (the real assembly step), as of its build_ingest_payload():
+
+    {
+      "item_id": str | None,          # sha256(source_url)[:16], via utils/cache.py
+      "schema_version": "0.1",
+      "item_type": str,               # == extracted["item_type"]
+      "card": {
+        "headline": str, "one_liner": str, "category_emoji": str,
+        "source_tag": str, "image_url": str | None,
+      },                               # NOTE: no source_url/source_name here
+      "extracted": {                  # utils/schema.py CAMPUS_ITEM_SCHEMA_PROMPT shape
+        "title": str, "item_type": str, "organizer": str, "department": str | None,
+        "category": str, "date_start": str | None, "date_end": str | None,
+        "details": dict, "notable_attendees": list[str], "tags": list[str],
+        "confidence_notes": str,
+      },
+      "sources": [{"source_url": str, "source_name": str, "source_type": str}, ...],
+      "trust": {"trust_score": int, "trust_label": str, "trust_reasons": list[str]},
+      "sensitivity": {"sensitivity_level": str, "reason": str},
+      "decision": "AUTO_PUBLISH" | "HOLD_FOR_HUMAN_REVIEW",
+      "requires_review": bool,        # decision == HOLD_FOR_HUMAN_REVIEW, data only
+      "connector_type": str,
+    }
+
+source_url/source_name live ONLY in sources[] (not on "card"), so the primary
+source is taken as sources[0] (dedup.py appends corroborating sources after the
+originating one). The request body is still typed as a raw list[dict] rather
+than a strict Pydantic model, so a differently-shaped item reports its own
+per-item error instead of breaking the batch - this contract can still drift.
 """
 
 from datetime import date, datetime, timezone
@@ -45,19 +71,6 @@ def _parse_date(value: Any) -> datetime | None:
         return None
 
 
-def _source_entries(item: dict[str, Any], primary_card: dict[str, Any]) -> list[dict[str, Any]]:
-    sources = item.get("sources")
-    if isinstance(sources, list) and sources:
-        return [s for s in sources if isinstance(s, dict) and s.get("source_url")]
-    if primary_card.get("source_url"):
-        return [{
-            "source_url": primary_card.get("source_url"),
-            "source_name": primary_card.get("source_name"),
-            "source_type": "web",
-        }]
-    return []
-
-
 def _get_or_create_source(db: Session, url: str, name: str | None) -> Source:
     source = db.scalar(select(Source).where(Source.url == url))
     if source is not None:
@@ -69,20 +82,19 @@ def _get_or_create_source(db: Session, url: str, name: str | None) -> Source:
 
 
 def _create_event(db: Session, item: dict[str, Any]) -> Event:
-    primary_card = item.get("primary_card") or {}
-    raw = primary_card.get("raw_extracted_data") or {}
-    details = raw.get("details")
+    card = item.get("card") or {}
+    extracted = item.get("extracted") or {}
+    details = extracted.get("details")
     trust = item.get("trust") or {}
 
-    title = raw.get("title") or primary_card.get("headline")
+    title = extracted.get("title") or card.get("headline")
     if not title:
-        raise ValueError("item has no title (checked primary_card.raw_extracted_data.title and primary_card.headline)")
+        raise ValueError("item has no title (checked extracted.title and card.headline)")
 
-    entries = _source_entries(item, primary_card)
+    entries = item.get("sources")
+    entries = [s for s in entries if isinstance(s, dict) and s.get("source_url")] if isinstance(entries, list) else []
     if not entries:
-        raise ValueError("item has no usable source information (checked sources[] and primary_card.source_url)")
-
-    primary_url = primary_card.get("source_url") or entries[0].get("source_url")
+        raise ValueError("item has no usable source information (sources[] is empty)")
 
     created: list[tuple[Source, str]] = []
     seen_source_ids: set[Any] = set()
@@ -94,18 +106,20 @@ def _create_event(db: Session, item: dict[str, Any]) -> Event:
         seen_source_ids.add(source.id)
         created.append((source, url))
 
-    primary_source = next((s for s, url in created if url == primary_url), created[0][0])
+    # sources[0] is the originating source (dedup.py appends merged/corroborating
+    # sources after it) - there's no source_url on "card" to cross-check against.
+    primary_source, primary_url = created[0]
 
     event = Event(
         source_id=primary_source.id,
         title=title,
-        description=primary_card.get("one_liner"),
-        event_type=raw.get("item_type") or item.get("item_type") or "event",
+        description=card.get("one_liner"),
+        event_type=extracted.get("item_type") or item.get("item_type") or "event",
         venue=details.get("venue") if isinstance(details, dict) else None,
-        start_at=_parse_date(raw.get("date_start")),
-        end_at=_parse_date(raw.get("date_end")),
-        source_url=primary_url or primary_source.url,
-        image_url=primary_card.get("image_url"),
+        start_at=_parse_date(extracted.get("date_start")),
+        end_at=_parse_date(extracted.get("date_end")),
+        source_url=primary_url,
+        image_url=card.get("image_url"),
         raw_extracted_json=item,
         confidence_score=trust.get("trust_score"),
         status=EventStatus.PENDING_VERIFICATION,

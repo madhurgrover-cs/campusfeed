@@ -1,12 +1,14 @@
 """Response models for the /ingest API.
 
 The request body is intentionally untyped (list[dict]) rather than a strict
-Pydantic model. Per ai-engine/INTEGRATION_NOTES.md, the item shape ("details"
-in particular) is explicitly flexible and the end-to-end contract between the
-AI engine's pipeline stages (extraction -> validate -> dedup) was not finalized
-at the time this endpoint was written. Validation of what's actually needed is
-done defensively per-item in the router so one malformed item reports its own
-error status instead of rejecting or crashing the whole batch.
+Pydantic model. The item shape is confirmed against
+ai-engine/src/pipeline/build_ingest_payload.py on the track-b branch (see the
+module docstring in app/ingest/router.py for the full shape), but "details" in
+particular is explicitly flexible per ai-engine/INTEGRATION_NOTES.md, and this
+whole contract has already changed once since this endpoint was first written.
+Validation of what's actually needed is done defensively per-item in the
+router so one malformed item reports its own error status instead of
+rejecting or crashing the whole batch.
 """
 
 from typing import Literal
