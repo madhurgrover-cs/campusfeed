@@ -27,7 +27,9 @@ class Event(Base):
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     event_type: Mapped[str] = mapped_column(Text, nullable=False)
     venue: Mapped[str | None] = mapped_column(Text, nullable=True)
-    start_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    start_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True, index=True
+    )
     end_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     registration_deadline: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     source_url: Mapped[str] = mapped_column(Text, nullable=False)
@@ -42,6 +44,7 @@ class Event(Base):
         ),
         nullable=False,
         default=EventStatus.EXTRACTED,
+        index=True,
     )
     canonical_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("event.id"), nullable=True

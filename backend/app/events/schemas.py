@@ -37,3 +37,10 @@ class EventOut(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class PaginatedEvents(BaseModel):
+    total: int
+    limit: int
+    offset: int
+    results: list[EventOut]
