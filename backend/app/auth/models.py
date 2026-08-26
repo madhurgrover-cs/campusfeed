@@ -7,6 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
+from app.notifications.models import NotificationPriority
 
 
 class UserRole(str, enum.Enum):
@@ -32,4 +33,14 @@ class User(Base):
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    min_priority: Mapped[NotificationPriority] = mapped_column(
+        Enum(
+            NotificationPriority,
+            name="notification_priority",
+            values_callable=lambda enum_class: [member.value for member in enum_class],
+        ),
+        nullable=False,
+        default=NotificationPriority.LOW,
+        server_default=NotificationPriority.LOW.value,
     )
